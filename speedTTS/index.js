@@ -16,11 +16,11 @@ const optWatch = {
 
 const fakeGeo = {
     coords: {
-        latitude: 25.0465767,
-        longitude: 121.5612388,
+        latitude: 25.054368,
+        longitude: 121.606740,
         accuracy: 15,
-        speed: 12.3,
-        heading: 45,
+        speed: 18.6,
+        heading: 65,
         altitude: null,
         altitudeAccuracy: null,
     },
