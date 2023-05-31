@@ -171,59 +171,91 @@ function showPosition ( position ) {
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-// 找尋最近的 測速相機
-function findNearestCamera(lon, lat) {
-    let nearestCamera = 1;
-    let minDegree = 99;
+// ~~~~~~ 找尋最近的 測速相機
+function findNearestCamera ( lon , lat ) {
 
-    for (let i = 1, cnt = jsonCamera.result.total; i < cnt; i++) {
-        let r = jsonCamera.result.records[i];
-        let m = Math.max(Math.abs(r.Longitude - lon), Math.abs(r.Latitude - lat));
-        if (m < minDegree) {
-            nearestCamera = i;
-            minDegree = m;
-        }
-    }
+	let nearestCamera = 1 ;
+	let minDegree = 99 ;
 
-    let r = jsonCamera.result.records[nearestCamera];
-    let d = Math.trunc(distanceMarkers(lon, lat, r.Longitude, r.Latitude) * 1000);
-    let dFloor = Math.floor(d / 100) * 100;
-    let s1 = `最近的相機： 距離 ${d} 公尺，限速 ${r.limit} 公里， 所在地 [${r.Address} ~ ${r.direct}]\n`;
-    let s2 = `距離 ${dFloor} 公尺，限速 ${r.limit} 公里`;
+	for ( let i = 1 , cnt = jsonCamera.result.total ; i < cnt ; i ++ ) {
 
-    x.value += s1;
+		let r = jsonCamera.result.records [ i ] ;
+		let m = Math.max( Math.abs( r.Longitude - lon ) , Math.abs( r.Latitude - lat ) ) ;
 
-    if (ttsNearest && d < 1000 && dFloor > 0 &&
-        prevCamera == nearestCamera && prevDFloor > dFloor)
-        convertToSpeech(s2);
+		if ( m < minDegree ) {
 
-    prevCamera = nearestCamera;
-    prevDFloor = dFloor;
+			nearestCamera = i ;
+			minDegree = m ;
+
+		}
+
+	}
+
+	let r = jsonCamera.result.records [ nearestCamera ] ;
+	let d = Math.trunc( distanceMarkers ( lon , lat , r.Longitude , r.Latitude ) * 1000 ) ;
+	let dFloor = Math.floor( d / 100 ) * 100 ;
+
+	// ~~~~ Original code
+	//let s1 = `最近的相機： 距離 ${d} 公尺，限速 ${r.limit} 公里， 所在地 [${r.Address} ~ ${r.direct}]\n`;
+	//let s2 = `距離 ${dFloor} 公尺，限速 ${r.limit} 公里`;
+
+	// ~~~~ Modified code
+	let s1 = `最近的相機： 距離: ${ d } 公尺，限速: ${ r.limit } 公里/小時， 所在地: [ ${ r.Address } ~ ${ r.direct } ] \n` ;
+	let s2 = `距離: ${ dFloor } 公尺，限速: ${ r.limit } 公里` ;
+
+	x.value += s1 ;
+
+	if ( nearestCamera == prevCamer , a ) {
+
+		console.log ( d , dFloor , prevTTS )
+
+		if ( ttsNearest && d < 1000 && dFloor < prevTTS ) {
+
+			convertToSpeech ( s2 ) ;
+			prevTTS = dFloor ;
+
+		}
+
+	} else {
+
+		prevCamera = nearestCamera ;
+		prevTTS = 99
+
+	}
+
 }
 
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-// 計算兩個經緯度座標之間的距離
-function distanceMarkers(lon1, lat1, lon2, lat2) {
-    var R = 6371; // km (change this constant to get miles)
-    var dLat = (lat2 - lat1) * Math.PI / 180;
-    var dLon = (lon2 - lon1) * Math.PI / 180;
-    var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-        Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
-        Math.sin(dLon / 2) * Math.sin(dLon / 2);
-    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-    var d = R * c;
+// ~~~~~~ 計算兩個經緯度座標之間的距離
+function distanceMarkers ( lon1 , lat1 , lon2 , lat2 ) {
 
-    return d;
+	var R = 6371 ;																	// km ( change this constant to get miles )
+	var dLat = ( lat2 - lat1 ) * Math.PI / 180 ;
+	var dLon = ( lon2 - lon1 ) * Math.PI / 180 ;
+	var a = Math.sin( dLat / 2 ) * Math.sin( dLat / 2 ) +
+		Math.cos( lat1 * Math.PI / 180 ) * Math.cos( lat2 * Math.PI / 180 ) *
+		Math.sin( dLon / 2 ) * Math.sin( dLon / 2 ) ;
+
+	var c = 2 * Math.atan2( Math.sqrt( a ) , Math.sqrt( 1 - a ) ) ;
+	var d = R * c ;
+
+	return d ;
+
 }
 
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-// TTS 文字轉語音
-function convertToSpeech(message) {
-    const speech = new SpeechSynthesisUtterance();
-    speech.text = message;
-    window.speechSynthesis.speak(speech);
+// ~~~~~~ TTS 文字轉語音
+function convertToSpeech ( message ) {
+
+	const speech = new SpeechSynthesisUtterance () ;
+	speech.text = message ;
+	window.speechSynthesis.speak ( speech ) ;
+
 }
 
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 // 初始化 Map 及所有圖層
 function initMap() {
