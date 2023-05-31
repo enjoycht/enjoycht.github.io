@@ -199,7 +199,7 @@ function findNearestCamera ( lon , lat ) {
 
 	// ~~~~ Modified code
 	let s1 = `最近的相機： 距離: ${ d } 公尺，限速: ${ r.limit } 公里/小時， 所在地: [ ${ r.Address } ~ ${ r.direct } ] \n` ;
-	let s2 = `距離: ${ dFloor } 公尺，限速: ${ r.limit } 公里` ;
+	let s2 = `前有測速照相，距離: ${ dFloor } 公尺，限速: ${ r.limit } 公里` ;
 
 	x.value += s1 ;
 
