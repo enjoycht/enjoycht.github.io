@@ -26,7 +26,7 @@ const fakeGeo = {
 		longitude : 121.606740 ,
 		accuracy : 15 ,
 		speed : 15.3 ,
-		heading : 65 ,
+		heading : 75 ,
 		altitude : null ,
 		altitudeAccuracy : null ,
 
