@@ -122,8 +122,8 @@ function showPosition ( position ) {
 
 	olCenter = ol.proj.fromLonLat ( [ lon , lat ] ) ;
 
-	x.value += `$ { currtime } : 緯度: $ { lat6 } , 經度: $ { lon6 } , 誤差: $ { accuracy } m , ` +
-		`速度: $ { speed1 } m/s , 方向: $ { direction } ° , 時間: $ { gpstime } \n` ;
+	x.value += `${ currtime } - 緯度: ${ lat6 }, 經度: ${ lon6 }, 誤差: ${ accuracy } m, ` +
+		`速度: ${ speed1 } m/s, 方向: ${ direction } °, 時間: ${ gpstime } \n` ;
 	//x.value += `${currtime} - 緯度:${lat6}, 經度:${lon6}, 誤差:${accuracy}m, ` +
 		//`速度:${speed1}m/s, 方向:${direction}°, 時間:${gpstime}\n`;
 
