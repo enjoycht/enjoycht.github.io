@@ -71,8 +71,8 @@ function startWatching () {
 	if ( navigator.geolocation ) {
 
 		idWatch = navigator.geolocation.watchPosition ( showPosition , showError , optWatch ) ;
-		document.getElementById ( "btnStart" ) .disabled = true ;
-		document.getElementById ( "btnStop" ) .disabled = false ;
+		document.getElementById ( "btnStart" ).disabled = true ;
+		document.getElementById ( "btnStop" ).disabled = false ;
 
 	} else {
 
@@ -87,8 +87,8 @@ function startWatching () {
 function stopWatching () {
 
 	navigator.geolocation.clearWatch ( idWatch ) ;
-	document.getElementById ( "btnStop" ) .disabled = true ;
-	document.getElementById ( "btnStart" ) .disabled = false ;
+	document.getElementById ( "btnStop" ).disabled = true ;
+	document.getElementById ( "btnStart" ).disabled = false ;
 
 }
 
@@ -114,8 +114,8 @@ function showPosition ( position ) {
 	const heading = position.coords.heading ? position.coords.heading : - 1 ;
 	const radians = Math.PI * heading / 180 ;
 	const direction = ( heading >= 0 ) ? heading.toFixed ( 0 ) : "?" ;
-	const gpstime = ( new Date ( position.timestamp ) ) .toLocaleTimeString () ;
-	const currtime = ( new Date () ) .toLocaleTimeString () ;
+	const gpstime = ( new Date ( position.timestamp ) ).toLocaleTimeString () ;
+	const currtime = ( new Date () ).toLocaleTimeString () ;
 
 	olCenter = ol.proj.fromLonLat ( [ lon , lat ] ) ;
 
@@ -325,7 +325,7 @@ function makeSpeedLimitSign () {
 			image : new ol.style.Circle ( {
 
 				  radius : 12 ,
-				  // fill : new ol.style.Fill ( { color : '#F00' } ) ,
+				  //fill : new ol.style.Fill ( { color : '#F00' } ) ,
 				  fill : new ol.style.Fill ( { color : 'rgba ( 255 , 238 , 238 , 0.9 ) ' } ) ,
 				  stroke : new ol.style.Stroke ( { color : iColors [ i ] , width : 3 } ) ,
 
@@ -333,7 +333,7 @@ function makeSpeedLimitSign () {
 
 			text : new ol.style.Text ( {
 
-				  text : ( i * 10 ) .toString () ,
+				  text : ( i * 10 ).toString () ,
 				  offsetY : 1 ,
 				  scale : 1.2 ,
 				  stroke : new ol.style.Stroke ( { color : 'white' , width : 1 } ) ,
@@ -347,7 +347,7 @@ function makeSpeedLimitSign () {
 	}
 
 	// ~~~~ 匯入 測速執法點 Camera & 指派 Feature for n Points
-	fetch ( fileCamera ) .then ( response => response.text () ) .then ( data => {
+	fetch ( fileCamera ).then ( response => response.text () ).then ( data => {
 
 			jsonCamera = JSON.parse ( data ) ;
 
@@ -356,7 +356,7 @@ function makeSpeedLimitSign () {
 
 			createCameraLayer () ;											// 建立 測速執法點 圖層
 
-		} ) .catch ( error => {
+		} ).catch ( error => {
 
 			console.log ( 'Error :' , error ) ;
 
@@ -483,7 +483,7 @@ function toggleRotate () {
 
 	if ( !rotateView ) {
 
-		map.getView () .setRotation ( 0 ) ;
+		map.getView ().setRotation ( 0 ) ;
 
 	}
 
