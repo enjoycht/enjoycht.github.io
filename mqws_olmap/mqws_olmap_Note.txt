@@ -1,0 +1,8 @@
+在網頁中透過 MQTT 收發多個物件的座標資料，並更新至地圖上
+
+HTML5 範例程式
+請將以下 HTML 及 JavaScript 共三支程式另存新檔在同一目錄中。
+在「檔案總管」中點選 mqws_olmap.html 自動帶出 Browser，即可操作。
+可採用任何 MQTT Client 做為 Publisher 端，只要遵照範例中 pubPayload 的資料格式即可！
+程式會自動比對接收到的 MQTT Payload 中的 Id 欄位，若該 Id 曾收到過，則會先將地圖上的舊資料刪除，再增加新的。
+Label 可代換為 Sensors 中任一欄位的數值，但要先轉換為字串型態。
