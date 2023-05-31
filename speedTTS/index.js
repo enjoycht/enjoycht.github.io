@@ -49,19 +49,6 @@ var carFeature , carGeometry , car_style , car_bord_style , arrow_style , arrow_
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-var x = document.getElementById ( "result" ) ;
-var speedStyles = [ ] ;
-var toInit = true ;
-var rotateView = true ;
-var ttsNearest = false ;
-var prevCamera = -1 ;
-var prevTTS = 99 ;
-var map , olCenter ;
-var jsonCamera , idWatch ;
-var carFeature , carGeometry , car_style , car_bord_style , arrow_style , arrow_shape ;
-
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
 // ~~~~~~ 透過 GeoLocation API 取得 使用者經緯度座標
 function getLocation () {
 
@@ -79,32 +66,43 @@ function getLocation () {
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-function startWatching() {
-    if (navigator.geolocation) {
-        idWatch = navigator.geolocation.watchPosition(showPosition, showError, optWatch);
-        document.getElementById("btnStart").disabled = true;
-        document.getElementById("btnStop").disabled = false;
-    } else {
-        x.value += "您使用的 Browser 不支援 GeoLocation API！\n";
-    }
+function startWatching () {
+
+	if ( navigator.geolocation ) {
+
+		idWatch = navigator.geolocation.watchPosition ( showPosition , showError , optWatch ) ;
+		document.getElementById ( "btnStart" ).disabled = true ;
+		document.getElementById ( "btnStop" ).disabled = false ;
+
+	} else {
+
+		x.value += "您使用的 Browser 不支援 GeoLocation API！\n" ;
+
+	}
+
 }
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-function stopWatching() {
-    navigator.geolocation.clearWatch(idWatch);
-    document.getElementById("btnStop").disabled = true;
-    document.getElementById("btnStart").disabled = false;
+function stopWatching () {
+
+	navigator.geolocation.clearWatch ( idWatch ) ;
+	document.getElementById ( "btnStop" ).disabled = true ;
+	document.getElementById ( "btnStart" ).disabled = false ;
+
 }
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-function showError(error) {
-    console.log('[Error: ' + error.code + '] ' + error.message);
+function showError ( error ) {
+
+	console.log ( '[Error: ' + error.code + '] ' + error.message ) ;
+
 }
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+// ~~~~~~ 標示出 GeoLocation API 取得 使用者經緯度座標
 function showPosition ( position ) {
 
 	const lat = position.coords.latitude ;
@@ -418,27 +416,42 @@ function createCarLayer() {
     map.addLayer(carLayer); // 疊加 車子或行人 圖層
 }
 
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-// 切換成 自動依行進方向來旋轉地圖
-function toggleRotate() {
-    rotateView = !rotateView;
-    if (!rotateView)
-        map.getView().setRotation(0);
+// ~~~~~~ 切換成 自動依行進方向來旋轉地圖
+function toggleRotate () {
+
+	rotateView = !rotateView ;
+
+	if ( !rotateView ) {
+
+		map.getView ().setRotation ( 0 ) ;
+
+	}
 
 }
 
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-// 開啟或關閉 TTS
-function toggleTTS() {
-    ttsNearest = !ttsNearest;
+// ~~~~~~ 開啟或關閉 TTS
+function toggleTTS () {
+
+	ttsNearest = !ttsNearest ;
+
 }
 
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-// 偽造座標 並更新地圖
-function fakeLocation() {
-    showPosition(fakeGeo);
+// ~~~~~~ 偽造座標 並更新地圖
+function fakeLocation () {
+
+	showPosition ( fakeGeo ) ;
+
 }
 
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-// 先透過 GeoLocation 取得 使用者經緯度座標，再初始化 Map 及所有圖層
-getLocation();
+// ~~~~~~ 先透過 GeoLocation 取得 使用者經緯度座標，再初始化 Map 及所有圖層
+getLocation () ;
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
