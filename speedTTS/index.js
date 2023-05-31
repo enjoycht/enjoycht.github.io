@@ -89,6 +89,7 @@ function startWatching() {
     }
 }
 
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 function stopWatching() {
     navigator.geolocation.clearWatch(idWatch);
@@ -96,60 +97,79 @@ function stopWatching() {
     document.getElementById("btnStart").disabled = false;
 }
 
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 function showError(error) {
     console.log('[Error: ' + error.code + '] ' + error.message);
 }
 
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-function showPosition(position) {
-    const lat = position.coords.latitude;
-    const lon = position.coords.longitude;
-    const lat6 = lat.toFixed(6);
-    const lon6 = lon.toFixed(6);
-    const accuracy = position.coords.accuracy.toFixed(0);
-    const speed = position.coords.speed ? position.coords.speed : 0;
-    const speed1 = speed.toFixed(1);
-    const heading = position.coords.heading ? position.coords.heading : -1;
-    const radians = Math.PI * heading / 180;
-    const direction = (heading >= 0) ? heading.toFixed(0) : "?";
-    const gpstime = (new Date(position.timestamp)).toLocaleTimeString();
-    const currtime = (new Date()).toLocaleTimeString();
+function showPosition ( position ) {
 
-    olCenter = ol.proj.fromLonLat([lon, lat]);
-    x.value += `${currtime} - 緯度:${lat6}, 經度:${lon6}, 誤差:${accuracy}m, ` +
-        `速度:${speed1}m/s, 方向:${direction}°, 時間:${gpstime}\n`;
-    x.scrollTop = x.scrollHeight;
+	const lat = position.coords.latitude ;
+	const lon = position.coords.longitude ;
+	const lat6 = lat.toFixed ( 6 ) ;
+	const lon6 = lon.toFixed ( 6 ) ;
+	const accuracy = position.coords.accuracy.toFixed ( 0 ) ;
+	const speed = position.coords.speed ? position.coords.speed : 0 ;
+	const speed1 = speed.toFixed ( 1 ) ;
+	const heading = position.coords.heading ? position.coords.heading : - 1 ;
+	const radians = Math.PI * heading / 180 ;
+	const direction = ( heading >= 0 ) ? heading.toFixed ( 0 ) : "?" ;
+	const gpstime = ( new Date ( position.timestamp ) ).toLocaleTimeString () ;
+	const currtime = ( new Date () ).toLocaleTimeString () ;
 
-    if (toInit) {
-        initMap(); // 初始化地圖
-        toInit = false;
-    } else {
-        // 移動人車位置
-        carGeometry.setCoordinates(olCenter);
+	olCenter = ol.proj.fromLonLat ( [ lon , lat ] ) ;
 
-        // 標示人車前進方向
-        if (speed == 0 || heading == -1) { // 設為 無指向性 的圓形圖示
-            carFeature.setStyle([car_bord_style, car_style]);
-        } else { // 設為 指向性 的圓錐形圖示
-            arrow_shape.setRotation(radians);
-            carFeature.setStyle([car_bord_style, arrow_style, car_style]);
-        }
+	//x.value += `$ { currtime } - 緯度 :$ { lat6 } , 經度 :$ { lon6 } , 誤差 :$ { accuracy } m , ` +
+	//	`速度 :$ { speed1 } m / s , 方向 :$ { direction } ° , 時間 :$ { gpstime } \n` ;
+	x.value += `${currtime} - 緯度:${lat6}, 經度:${lon6}, 誤差:${accuracy}m, ` +
+		`速度:${speed1}m/s, 方向:${direction}°, 時間:${gpstime}\n`;
 
-        // 平移 地圖景窗
-        const v = map.getView();
-        v.setCenter(olCenter);
+	x.scrollTop = x.scrollHeight ;
 
-        // 旋轉 地圖景窗
-        if (rotateView && heading >= 0) {
-            v.setRotation(- radians);
-        }
+	if ( toInit ) {
 
-        // 找尋最近的 測速相機
-        findNearestCamera(lon, lat);
-    }
+		initMap () ;																	// 初始化地圖
+		toInit = false ;
+
+	} else {
+
+		// ~~~~ 移動人車位置
+		carGeometry.setCoordinates ( olCenter ) ;
+
+		// ~~~~ 標示人車前進方向
+		if ( speed == 0 || heading == -1 ) 	{ 				// 設為 無指向性 的圓形圖示
+
+			carFeature.setStyle ( [ car_bord_style , car_style ] ) ;
+
+		} else {																			// 設為 指向性 的圓錐形圖示
+
+			arrow_shape.setRotation ( radians ) ;
+			carFeature.setStyle ( [ car_bord_style , arrow_style , car_style ] ) ;
+
+		}
+
+		// ~~~~ 平移 地圖景窗
+		const v = map.getView () ;
+		v.setCenter ( olCenter ) ;
+
+		// ~~~~ 旋轉 地圖景窗
+		if ( rotateView && heading >= 0 ) {
+
+			v.setRotation ( -radians ) ;
+
+		}
+
+		// ~~~~ 找尋最近的 測速相機
+		findNearestCamera ( lon , lat ) ;
+
+	}
+
 }
 
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 // 找尋最近的 測速相機
 function findNearestCamera(lon, lat) {
