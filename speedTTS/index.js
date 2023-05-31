@@ -1,53 +1,83 @@
 /*
 speedTTS/index.js
-Version: 2.2.3  @2023/05/29
+Version: 2.2.4  @2023/05/29
 Wenchin Hsieh @Goomo.Net Studio, wenchin@goomo.net
 */
 
-const zoomSize = 14;
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+const zoomSize = 14 ;
 const fileCamera = "camera.json"
-const iColors = ['#FDD', '#FCC', '#FBB', '#FAA', '#F88', '#F66', '#F33', '#F00', '#E00', '#D00', '#C00', '#B00', '#A00', '#900'];
+const iColors = [ '#FDD' , '#FCC' , '#FBB' , '#FAA' , '#F88' , '#F66' , '#F33' , '#F00' , '#E00' , '#D00' , '#C00' , '#B00' , '#A00' , '#900' ] ;
 
 const optWatch = {
-    enableHighAccuracy: true,
-    timeout: 3000,
-    maximumAge: 0,
+
+	enableHighAccuracy : true ,
+	timeout : 3000 ,
+	maximumAge : 0 ,
+
 }
 
 const fakeGeo = {
-    coords: {
-        latitude: 25.054368,
-        longitude: 121.606740,
-        accuracy: 15,
-        speed: 18.6,
-        heading: 72,
-        altitude: null,
-        altitudeAccuracy: null,
-    },
-    timestamp: new Date(),
+
+	coords : {
+
+		latitude : 25.054368 ,
+		longitude : 121.606740 ,
+		accuracy : 15 ,
+		speed : 15.3 ,
+		heading : 75 ,
+		altitude : null ,
+		altitudeAccuracy : null ,
+
+	} ,
+
+	timestamp : new Date () ,
+
 }
 
-var x = document.getElementById("result");
-var speedStyles = [];
-var toInit = true;
-var rotateView = true;
-var ttsNearest = false;
-var prevCamera = 0;
-var prevDFloor = -1;
-var map, olCenter;
-var jsonCamera, idWatch;
-var carFeature, carGeometry, car_style, car_bord_style, arrow_style, arrow_shape;
+var x = document.getElementById ( "result" ) ;
+var speedStyles = [ ] ;
+var toInit = true ;
+var rotateView = true ;
+var ttsNearest = false ;
+var prevCamera = -1 ;
+var prevTTS = 99 ;
+var map , olCenter ;
+var jsonCamera , idWatch ;
+var carFeature , carGeometry , car_style , car_bord_style , arrow_style , arrow_shape ;
 
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-// 透過 GeoLocation API 取得 使用者經緯度座標
-function getLocation() {
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(showPosition, showError);
-    } else {
-        console.log("您使用的 Browser 不支援 GeoLocation API！");
-    }
+var x = document.getElementById ( "result" ) ;
+var speedStyles = [ ] ;
+var toInit = true ;
+var rotateView = true ;
+var ttsNearest = false ;
+var prevCamera = -1 ;
+var prevTTS = 99 ;
+var map , olCenter ;
+var jsonCamera , idWatch ;
+var carFeature , carGeometry , car_style , car_bord_style , arrow_style , arrow_shape ;
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+// ~~~~~~ 透過 GeoLocation API 取得 使用者經緯度座標
+function getLocation () {
+
+	if ( navigator.geolocation ) {
+
+		navigator.geolocation.getCurrentPosition ( showPosition , showError ) ;
+
+	} else {
+
+		console.log ( "您使用的 Browser 不支援 GeoLocation API！" ) ;
+
+	}
+
 }
 
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 function startWatching() {
     if (navigator.geolocation) {
