@@ -112,7 +112,7 @@ function showPosition ( position ) {
 	const accuracy = position.coords.accuracy.toFixed ( 0 ) ;
 	const speed = position.coords.speed ? position.coords.speed : 0 ;
 	const speed1 = speed.toFixed ( 1 ) ;
-	const heading = position.coords.heading ? position.coords.heading : - 1 ;
+	const heading = position.coords.heading ? position.coords.heading : -1 ;
 	const radians = Math.PI * heading / 180 ;
 	const direction = ( heading >= 0 ) ? heading.toFixed ( 0 ) : "?" ;
 	const gpstime = ( new Date ( position.timestamp ) ).toLocaleTimeString () ;
@@ -178,7 +178,7 @@ function findNearestCamera ( lon , lat ) {
 	for ( let i = 1 , cnt = jsonCamera.result.total ; i < cnt ; i ++ ) {
 
 		let r = jsonCamera.result.records [ i ] ;
-		let m = Math.max( Math.abs( r.Longitude - lon ) , Math.abs( r.Latitude - lat ) ) ;
+		let m = Math.max ( Math.abs ( r.Longitude - lon ) , Math.abs ( r.Latitude - lat ) ) ;
 
 		if ( m < minDegree ) {
 
@@ -190,8 +190,8 @@ function findNearestCamera ( lon , lat ) {
 	}
 
 	let r = jsonCamera.result.records [ nearestCamera ] ;
-	let d = Math.trunc( distanceMarkers ( lon , lat , r.Longitude , r.Latitude ) * 1000 ) ;
-	let dFloor = Math.floor( d / 100 ) * 100 ;
+	let d = Math.trunc ( distanceMarkers ( lon , lat , r.Longitude , r.Latitude ) * 1000 ) ;
+	let dFloor = Math.floor ( d / 10 ) * 10 ;
 
 	// ~~~~ Original code
 	//let s1 = `最近的相機： 距離 ${d} 公尺，限速 ${r.limit} 公里， 所在地 [${r.Address} ~ ${r.direct}]\n`;
@@ -231,11 +231,11 @@ function distanceMarkers ( lon1 , lat1 , lon2 , lat2 ) {
 	var R = 6371 ;																	// km ( change this constant to get miles )
 	var dLat = ( lat2 - lat1 ) * Math.PI / 180 ;
 	var dLon = ( lon2 - lon1 ) * Math.PI / 180 ;
-	var a = Math.sin( dLat / 2 ) * Math.sin( dLat / 2 ) +
-		Math.cos( lat1 * Math.PI / 180 ) * Math.cos( lat2 * Math.PI / 180 ) *
-		Math.sin( dLon / 2 ) * Math.sin( dLon / 2 ) ;
+	var a = Math.sin ( dLat / 2 ) * Math.sin ( dLat / 2 ) +
+		Math.cos ( lat1 * Math.PI / 180 ) * Math.cos ( lat2 * Math.PI / 180 ) *
+		Math.sin ( dLon / 2 ) * Math.sin ( dLon / 2 ) ;
 
-	var c = 2 * Math.atan2( Math.sqrt( a ) , Math.sqrt( 1 - a ) ) ;
+	var c = 2 * Math.atan2 ( Math.sqrt ( a ) , Math.sqrt ( 1 - a ) ) ;
 	var d = R * c ;
 
 	return d ;
@@ -294,6 +294,7 @@ function initMap() {
     makeSpeedLimitSign();
 }
 
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 // 為不同速限的交通標誌 建立不同的 Styles
 function makeSpeedLimitSign() {
@@ -338,6 +339,7 @@ function makeSpeedLimitSign() {
         });
 }
 
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 // 建立上層 Vector Layer for 測速執法點
 function createCameraLayer() {
@@ -367,6 +369,7 @@ function createCameraLayer() {
     createCarLayer(); // 建立 車子 或 行人 圖層
 }
 
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 // 建立最上層 Vector Layer for 車子或行人
 function createCarLayer() {
