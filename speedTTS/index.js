@@ -120,8 +120,10 @@ function showPosition ( position ) {
 
 	olCenter = ol.proj.fromLonLat ( [ lon , lat ] ) ;
 
-	x.value += `${ currtime } - 緯度: ${ lat6 }, 經度: ${ lon6 }, 誤差: ${ accuracy } m, ` +
-		`速度: ${ speed1 } m/s, 方向: ${ direction } °, 時間: ${ gpstime } \n` ;
+	x.value += `${ currtime }-緯度: ${ lat6 }, 經度: ${ lon6 }, 誤差: ${ accuracy } m, ` +
+		`速度: ${ speed1 } m/s, 方向: ${ direction } °\n` ;
+	//x.value += `${ currtime } - 緯度: ${ lat6 }, 經度: ${ lon6 }, 誤差: ${ accuracy } m, ` +
+		//`速度: ${ speed1 } m/s, 方向: ${ direction } °, 時間: ${ gpstime } \n` ;
 	//x.value += `${currtime} - 緯度:${lat6}, 經度:${lon6}, 誤差:${accuracy}m, ` +
 		//`速度:${speed1}m/s, 方向:${direction}°, 時間:${gpstime}\n`;
 
@@ -198,8 +200,8 @@ function findNearestCamera ( lon , lat ) {
 	//let s2 = `距離 ${dFloor} 公尺，限速 ${r.limit} 公里`;
 
 	// ~~~~ Modified code
-	let s1 = `最近的相機： 距離: ${ d } 公尺，限速: ${ r.limit } 公里/小時， 所在地: [ ${ r.Address } ~ ${ r.direct } ] \n` ;
-	let s2 = `前有測速照相，距離: ${ dFloor } 公尺，限速: ${ r.limit } 公里` ;
+	let s1 = `最近的相機： 距離: ${ d } 公尺， 限速: ${ r.limit } 公里/小時， 所在地: [ ${ r.Address } ~ ${ r.direct } ] \n` ;
+	let s2 = `前有測速照相，距離: ${ dFloor } 公尺， 限速: ${ r.limit } 公里` ;
 
 	x.value += s1 ;
 
