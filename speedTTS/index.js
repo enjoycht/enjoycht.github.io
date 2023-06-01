@@ -191,7 +191,7 @@ function findNearestCamera ( lon , lat ) {
 
 	let r = jsonCamera.result.records [ nearestCamera ] ;
 	let d = Math.trunc ( distanceMarkers ( lon , lat , r.Longitude , r.Latitude ) * 1000 ) ;
-	let dFloor = Math.floor ( d / 10 ) * 10 ;
+	let dFloor = Math.floor ( d / 100 ) * 100 ;
 
 	// ~~~~ Original code
 	//let s1 = `最近的相機： 距離 ${d} 公尺，限速 ${r.limit} 公里， 所在地 [${r.Address} ~ ${r.direct}]\n`;
